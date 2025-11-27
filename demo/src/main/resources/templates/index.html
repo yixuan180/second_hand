@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>二手交易平台 - 商品列表</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="product-body">
+    <header class="main-header">
+      <a href="index.html" class="logo-link">
+        <span class="sr-only">二手交易平台</span>
+      </a>
+      <nav class="top-nav">
+        <a href="login.html" class="nav-link">商品上架</a>
+        <a href="#" class="nav-link">聊天室</a>
+        <a href="#" id="logout-btn" class="nav-link">個人</a>
+        <a href="#" id="logout-btn-real" class="nav-link">登出</a>
+      </nav>
+    </header>
+
+    <main class="content-area">
+      <div class="search-bar-container">
+        <div class="dropdown">
+          <button class="dropbtn">分類 <span class="arrow">▼</span></button>
+
+          <div class="dropdown-content">
+            <a href="#" data-category="clothing">衣服</a>
+            <a href="#" data-category="accessories">飾品</a>
+            <a href="#" data-category="electronics">電器</a>
+            <a href="#" data-category="household">生活物品</a>
+            <a href="#" data-category="other">其他</a>
+          </div>
+        </div>
+        <input type="text" placeholder="搜尋" class="search-input" />
+        <button class="search-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
+      <div class="product-carousel-container">
+        <button class="carousel-arrow left-arrow">
+          <span class="arrow-icon">〈</span>
+        </button>
+
+        <div class="product-grid-wrapper">
+          <div class="product-grid">
+            <a href="product_detail.html" class="product-card-link">
+              <div class="product-card">
+                <div class="image-placeholder"></div>
+                <div class="product-info">
+                  <p class="product-name">商品名稱</p>
+                  <p class="product-price">商品價格</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="product_detail.html" class="product-card-link">
+              <div class="product-card">
+                <div class="image-placeholder"></div>
+                <div class="product-info">
+                  <p class="product-name">商品名稱</p>
+                  <p class="product-price">商品價格</p>
+                </div>
+              </div>
+            </a>
+
+            <a href="product_detail.html" class="product-card-link">
+              <div class="product-card">
+                <div class="image-placeholder"></div>
+                <div class="product-info">
+                  <p class="product-name">商品名稱</p>
+                  <p class="product-price">商品價格</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <button class="carousel-arrow right-arrow">
+          <span class="arrow-icon">〉</span>
+        </button>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
