@@ -681,14 +681,65 @@ body {
 }
 
 .image-upload-box {
-    border: 1px solid var(--main-color); /* 黑色細邊框 */
+    /* 保持原有的主上傳框樣式 */
+    /* ... 保持 border, height: 200px, display: flex, justify-content: center, align-items: center ... */
+    border: 1px solid var(--main-color); 
     border-radius: 5px;
     height: 200px;
     display: flex;
+    flex-direction: column; /* 讓圖示和文字上下排列 */
     justify-content: center;
     align-items: center;
     cursor: pointer;
     background-color: #FFFFFF;
+}
+
+.upload-tip {
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--placeholder-color);
+}
+
+.thumbnail-preview-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    /* 確保容器可以包住 5 張縮圖 */
+    overflow-x: auto; 
+}
+
+.thumbnail-image-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--secondary-border);
+    border-radius: 3px;
+    flex-shrink: 0; /* 防止縮圖被擠壓 */
+}
+
+.thumbnail-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.thumbnail-delete-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #CC0000;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    text-align: center;
+    padding: 0;
+    z-index: 5;
 }
 
 .upload-icon {

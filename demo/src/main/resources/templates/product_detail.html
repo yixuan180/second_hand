@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>二手交易平台 - 商品詳細</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body class="product-body">
@@ -13,11 +13,17 @@
         <a href="index.html" class="logo-link">
             <span class="sr-only">二手交易平台</span> 
         </a>
+        
         <nav class="top-nav">
-            <a href="upload.html" class="nav-link">商品上架</a>
-            <a href="#" class="nav-link">聊天室</a>
-            <a href="#" class="nav-link">個人</a>
-            <a href="#" id="logout-btn-real" class="nav-link">登出</a>
+            <div id="logged-in-links" style="display: none;"> <a href="upload.html" class="nav-link">商品上架</a>
+                <a href="#" class="nav-link">聊天室</a>
+                <a href="#" class="nav-link">個人</a>
+                <a href="#" id="logout-btn-real" class="nav-link">登出</a>
+            </div>
+
+            <div id="logged-out-links" style="display: none;"> <a href="login.html" class="nav-link">登入</a>
+                <a href="login.html" class="nav-link">註冊</a> 
+            </div>
         </nav>
     </header>
 
@@ -77,6 +83,6 @@
         
     </main>
 
-    <script src="app.js"></script>
+    <script src="../static/app.js"></script>
 </body>
 </html>

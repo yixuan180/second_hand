@@ -1,157 +1,120 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>二手交易平台 - 物品刊登</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </head>
-  <body class="product-body">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body class="product-body">
+    
     <header class="main-header">
-      <a href="index.html" class="logo-link">
-        <span class="sr-only">二手交易平台</span>
-      </a>
-      <nav class="top-nav">
-        <a href="upload.html" class="nav-link">商品上架</a>
-        <a href="#" class="nav-link">聊天室</a>
-        <a href="#" class="nav-link">個人</a>
-        <a href="#" id="logout-btn-real" class="nav-link">登出</a>
-      </nav>
+        <a href="index.html" class="logo-link">
+            <span class="sr-only">二手交易平台</span> 
+        </a>
+        <!-- <nav class="top-nav">
+            <a href="upload.html" class="nav-link">商品上架</a>
+            <a href="#" class="nav-link">聊天室</a>
+            <a href="#" class="nav-link">個人</a>
+            <a href="#" id="logout-btn-real" class="nav-link">登出</a>
+        </nav> -->
+        <nav class="top-nav">
+            <div id="logged-in-links" style="display: none;"> <a href="upload.html" class="nav-link">商品上架</a>
+                <a href="#" class="nav-link">聊天室</a>
+                <a href="#" class="nav-link">個人</a>
+                <a href="#" id="logout-btn-real" class="nav-link">登出</a>
+            </div>
+
+            <div id="logged-out-links" style="display: none;"> <a href="login.html" class="nav-link">登入</a>
+                <a href="login.html" class="nav-link">註冊</a> 
+            </div>
+        </nav>
     </header>
 
     <main class="content-area upload-area">
-      <h2 class="page-title">二手物品刊登</h2>
+        <h2 class="page-title">二手物品刊登</h2>
+        
+        <form class="upload-form">
+            
+            <!-- <div class="form-section image-upload-section">
+                <p class="section-label upload-label">☁️ 上傳圖片 (0/5)</p>
+                
+                <div class="image-upload-box" onclick="document.getElementById('file-input').click()">
+                    <span class="upload-icon" id="upload-placeholder-icon">☁️</span>
+                    <img id="preview-image" style="width: 100%; height: 100%; object-fit: cover; display: none; border-radius: 8px;">
+                </div>
 
-      <form class="upload-form">
-        <div class="form-section image-upload-section">
-          <p class="section-label upload-label">☁️ 上傳圖片 (點擊上傳)</p>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+            </div> -->
 
-          <div
-            class="image-upload-box"
-            onclick="document.getElementById('file-input').click()"
-          >
-            <span class="upload-icon" id="upload-placeholder-icon">☁️</span>
-            <img
-              id="preview-image"
-              style="
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: none;
-                border-radius: 8px;
-              "
-            />
-          </div>
+            <div class="form-section image-upload-section">
+                <p class="section-label upload-label" id="upload-status">☁️ 上傳圖片 (0/5)*</p>
+                
+                <input type="file" id="multi-file-input" multiple accept="image/*" style="display: none;">
+                
+                <div class="image-upload-box" id="upload-box">
+                    <span class="upload-icon" id="main-upload-icon">☁️</span>
+                    <p class="upload-tip">點擊或拖曳上傳 (最多 5 張)</p>
+                </div>
+                
+                <div class="thumbnail-preview-container" id="thumbnail-preview-container">
+                    </div>
+            </div>
+            
+            <div class="form-section">
+                <p class="section-label">👕 商品分類<span class="required-star">*</span></p>
+                <select id="category" class="form-input select-input" required>
+                    <option value="" disabled selected>分類</option>
+                    <option value="clothing">衣服</option>
+                    <option value="accessories">飾品</option>
+                </select>
+            </div>
+            
+            <p class="section-label">👕 商品資訊</p>
 
-          <input
-            type="file"
-            id="file-input"
-            accept="image/*"
-            style="display: none"
-          />
-        </div>
+            <div class="form-row">
+                <label for="product-name">商品名稱<span class="required-star">*</span></label>
+                <input type="text" id="product-name" placeholder="請輸入名稱" class="form-input" required>
+            </div>
 
-        <div class="form-section">
-          <p class="section-label">
-            <i class="fa-solid fa-shirt"></i> 商品分類<span
-              class="required-star"
-              >*</span
-            >
-          </p>
-          <select id="category" class="form-input select-input" required>
-            <option value="" disabled selected>分類</option>
-            <option value="clothing">衣服</option>
-            <option value="accessories">飾品</option>
-          </select>
-        </div>
+            <div class="form-row">
+                <label for="brand">品牌</label>
+                <input type="text" id="brand" placeholder="請輸入品牌" class="form-input">
+            </div>
 
-        <p class="section-label"><i class="fa-solid fa-shirt"></i> 商品資訊</p>
+            <div class="form-row">
+                <label for="price">價格<span class="required-star">*</span></label>
+                <input type="number" id="price" placeholder="請輸入價格" class="form-input price-input" required>
+            </div>
 
-        <div class="form-row">
-          <label for="product-name"
-            >商品名稱<span class="required-star">*</span></label
-          >
-          <input
-            type="text"
-            id="product-name"
-            placeholder="請輸入名稱"
-            class="form-input"
-            required
-          />
-        </div>
+            <div class="form-row">
+                <label for="condition">商品狀況等級<span class="required-star">*</span></label>
+                <select id="condition" class="form-input select-input" required>
+                    <option value="" disabled selected>請輸入狀況等級</option>
+                    <option value="new">全新</option>
+                    <option value="good">良好</option>
+                    <option value="fair">尚可</option>
+                </select>
+            </div>
 
-        <div class="form-row">
-          <label for="brand">品牌</label>
-          <input
-            type="text"
-            id="brand"
-            placeholder="請輸入名稱"
-            class="form-input"
-          />
-        </div>
-
-        <div class="form-row">
-          <label for="price">價格<span class="required-star">*</span></label>
-          <input
-            type="number"
-            id="price"
-            placeholder="請輸入名稱"
-            class="form-input price-input"
-            required
-          />
-        </div>
-
-        <div class="form-row">
-          <label for="condition"
-            >商品狀況等級<span class="required-star">*</span></label
-          >
-          <select id="condition" class="form-input select-input" required>
-            <option value="" disabled selected>請輸入名稱</option>
-            <option value="new">全新</option>
-            <option value="good">良好</option>
-            <option value="fair">尚可</option>
-          </select>
-        </div>
-
-        <div class="form-section">
-          <label for="description"
-            >敘述<span class="required-star">*</span></label
-          >
-          <textarea
-            id="description"
-            placeholder="請輸入名稱"
-            class="form-input textarea-input"
-            required
-          ></textarea>
-        </div>
-
-        <div class="form-row">
-          <label for="location"
-            >交易地點交易地點<span class="required-star">*</span></label
-          >
-          <input
-            type="text"
-            id="location"
-            placeholder="請輸入名稱"
-            class="form-input"
-            required
-          />
-        </div>
-
-        <div class="submit-row">
-          <button type="submit" class="btn btn-submit">送出審核</button>
-        </div>
-      </form>
+            <div class="form-section">
+                <label for="description">敘述<span class="required-star">*</span></label>
+                <textarea id="description" placeholder="請輸入敘述" class="form-input textarea-input" required></textarea>
+            </div>
+            
+            <div class="form-row">
+                <label for="location">交易地點交易地點<span class="required-star">*</span></label>
+                <input type="text" id="location" placeholder="請輸入地點" class="form-input" required>
+            </div>
+            
+            <div class="submit-row">
+                <button type="submit" class="btn btn-submit">送出審核</button>
+            </div>
+        </form>
+        
     </main>
 
-    <script src="app.js"></script>
-  </body>
+    <script src="../static/app.js"></script>
+</body>
 </html>

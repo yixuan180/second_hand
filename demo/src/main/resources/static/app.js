@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 通用函式：控制導航欄顯示 ---
+    function updateNav() {
+        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const loggedInLinks = document.getElementById('logged-in-links');
+        const loggedOutLinks = document.getElementById('logged-out-links');
+
+        if (loggedInLinks && loggedOutLinks) {
+            if (loggedIn) {
+                // 已登入：顯示上架、聊天、個人、登出
+                loggedInLinks.style.display = 'block'; 
+                loggedOutLinks.style.display = 'none';
+            } else {
+                // 未登入：顯示登入、註冊
+                loggedInLinks.style.display = 'none';
+                loggedOutLinks.style.display = 'block';
+            }
+        }
+    }
+
+    // 在頁面載入時呼叫一次
+    updateNav();
     // --- 1. 基礎設定 ---
     const API_BASE_URL = 'http://localhost:8080/api';
     const path = window.location.pathname;
@@ -14,11 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('login-form');
         const loginMessage = document.getElementById('login-message');
 
-        // 防止重複登入
-        // if (localStorage.getItem('isLoggedIn') === 'true') {
-        //     window.location.href = 'products.html';
-        //     return;
-        // }
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'upload.html'; 
+            return;
+        }
 
         if (loginForm) {
             loginForm.addEventListener('submit', async (e) => {
@@ -41,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         loginMessage.style.color = "green";
                         loginMessage.textContent = '登入成功！';
+                        updateNav();
                         setTimeout(() => window.location.href = 'upload.html', 800);
                     } else {
                         loginMessage.style.color = "red";
@@ -54,20 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 3. 需登入頁面的共用邏輯 (登出與權限檢查) ---
-    //  if (isProductsPage || isDetailPage || isUploadPage) {
-    //     if (localStorage.getItem('isLoggedIn') !== 'true') {
-    //          alert('請先登入');
-    //          window.location.href = 'index.html';
-    //          return;
-    //      }
-
         const logoutBtn = document.getElementById('logout-btn-real');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.clear(); // 清除所有暫存
                 alert('已登出');
+                updateNav();
                 window.location.href = 'index.html';
             });
         }
@@ -174,50 +188,89 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const uploadForm = document.querySelector('.upload-form');
-        const fileInput = document.getElementById('file-input');
-        const previewImage = document.getElementById('preview-image');
-        const uploadIcon = document.getElementById('upload-placeholder-icon');
+        const fileInput = document.getElementById('multi-file-input');
+        const uploadBox = document.getElementById('upload-box');
+        const statusLabel = document.getElementById('upload-status');
+        const previewContainer = document.getElementById('thumbnail-preview-container');
+        //const uploadIcon = document.getElementById('upload-placeholder-icon');
         
         // 用來暫存圖片的 Base64 字串
-        let currentImageBase64 = null;
+        let currentImageBase64s = [];
+        const MAX_IMAGES = 5;
+
+        // 監聽：點擊上傳框時，觸發檔案輸入框
+        if (uploadBox) {
+            uploadBox.addEventListener('click', () => {
+                fileInput.click();
+            });
+        }
+
+        // 渲染預覽縮圖
+        function renderThumbnails() {
+            previewContainer.innerHTML = ''; // 清空現有預覽
+            statusLabel.innerHTML = `☁️ 上傳圖片 (${currentImageBase64s.length}/${MAX_IMAGES})<span class="required-star">*</span>`;
+
+            currentImageBase64s.forEach((base64, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'thumbnail-image-wrapper';
+                
+                const img = document.createElement('img');
+                img.src = base64;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'thumbnail-delete-btn';
+                deleteBtn.textContent = 'X';
+                deleteBtn.onclick = (e) => {
+                    e.stopPropagation(); // 阻止點擊冒泡
+                    currentImageBase64s.splice(index, 1); // 刪除該圖片
+                    renderThumbnails(); // 重新渲染
+                };
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(deleteBtn);
+                previewContainer.appendChild(wrapper);
+            });
+            
+            // 如果已達上限，隱藏主上傳框
+            uploadBox.style.display = currentImageBase64s.length >= MAX_IMAGES ? 'none' : 'flex';
+        }
 
         // 監聽：當使用者選了檔案
         if (fileInput) {
             fileInput.addEventListener('change', function(e) {
-                const file = e.target.files[0]; // 抓取第一個檔案
-                if (file) {
-                    const reader = new FileReader();
-                    
-                    // 當檔案讀取完成後
-                    reader.onload = function(event) {
-                        currentImageBase64 = event.target.result; //這就是轉換後的長字串
-                        
-                        // 顯示預覽圖
-                        previewImage.src = currentImageBase64;
-                        previewImage.style.display = 'block';
-                        uploadIcon.style.display = 'none'; // 隱藏雲朵圖示
-                    };
-                    
-                    // 開始讀取檔案
-                    reader.readAsDataURL(file);
+                const files = Array.from(e.target.files); // 抓取第一個檔案
+                
+                // 檢查是否超出最大數量
+                const remainingSlots = MAX_IMAGES - currentImageBase64s.length;
+                const filesToProcess = files.slice(0, remainingSlots);
+                if (files.length > remainingSlots) {
+                    alert(`最多只能上傳 ${MAX_IMAGES} 張圖片。已自動選取前 ${remainingSlots} 張。`);
                 }
+
+                filesToProcess.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        currentImageBase64s.push(event.target.result);
+                        renderThumbnails();
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 重設檔案輸入框，以便再次選擇相同的檔案
+                e.target.value = null; 
             });
         }
-
+      
         if (uploadForm) {
             uploadForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                // 檢查有沒有選圖片
-                const finalImagePaths = [];
-                if (currentImageBase64) {
-                    finalImagePaths.push(currentImageBase64);
-                } else {
-                    // 如果沒選圖，還是給一張假圖，避免壞掉
-                    finalImagePaths.push("https://via.placeholder.com/300");
+                // 檢查是否至少上傳了一張圖片
+                if (currentImageBase64s.length === 0) {
+                    alert('請至少上傳一張商品圖片！');
+                    return;
                 }
-
-                // 準備要傳給後端的資料
+                
                 const currentUser = localStorage.getItem('currentUser') || 'test';
                 
                 const productData = {
@@ -230,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     meetLocation: document.getElementById('location').value,
                     
                     // 關鍵修改：傳送真正的圖片字串
-                    imagePaths: finalImagePaths, 
+                    imagePaths: currentImageBase64s, 
                     
                     seller: { username: currentUser, password: "" } 
                 };
