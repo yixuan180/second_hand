@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手交易平台 - 商品列表</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="product-body">
+
+    <!-- Header 區域 -->
+    <header class="main-header">
+        <a href="index.html" class="logo-link">
+            <span class="sr-only">二手交易平台</span>
+        </a>
+
+        <nav class="top-nav">
+            <!-- upload-link 在 app.js 裡會被改成 login.html?redirect=upload -->
+            <a id="upload-link" href="login.html" class="nav-link">商品上架</a>
+
+            <a id="chat-link" href="#" class="nav-link">聊天室</a>
+
+            <!-- 登入後才會顯示 -->
+            <a id="user-name" href="#" class="nav-link"></a>
+
+            <!-- 訪客才會顯示 -->
+            <a id="login-link" href="login.html" class="nav-link">登入</a>
+
+            <!-- 登入後才會顯示 -->
+            <a id="logout-btn-real" href="#" class="nav-link">登出</a>
+        </nav>
+    </header>
+
+
+
+    <!-- Main 區域 -->
+    <main class="content-area">
+
+        <!-- 搜尋區 -->
+        <div class="search-bar-container">
+            <div class="dropdown">
+                <button class="dropbtn">分類 <span class="arrow">▼</span></button>
+
+                <div class="dropdown-content">
+                    <a href="#" data-category="clothing">衣服</a>
+                    <a href="#" data-category="accessories">飾品</a>
+                    <a href="#" data-category="electronics">電器</a>
+                    <a href="#" data-category="household">生活物品</a>
+                    <a href="#" data-category="other">其他</a>
+                </div>
+            </div>
+
+            <input type="text" placeholder="搜尋" class="search-input">
+            <button class="search-icon">🔍</button>
+        </div>
+
+
+
+        <!-- 商品展示區 -->
+        <div class="product-carousel-container">
+
+            <button class="carousel-arrow left-arrow">
+                <span class="arrow-icon">〈</span>
+            </button>
+
+            <div class="product-grid-wrapper">
+                <div class="product-grid">
+
+                    <!-- 初始化假資料（會被 app.js 替換成後端資料） -->
+                    <a href="product_detail.html" class="product-card-link">
+                        <div class="product-card">
+                            <div class="image-placeholder"></div>
+                            <div class="product-info">
+                                <p class="product-name">商品名稱</p>
+                                <p class="product-price">商品價格</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="product_detail.html" class="product-card-link">
+                        <div class="product-card">
+                            <div class="image-placeholder"></div>
+                            <div class="product-info">
+                                <p class="product-name">商品名稱</p>
+                                <p class="product-price">商品價格</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="product_detail.html" class="product-card-link">
+                        <div class="product-card">
+                            <div class="image-placeholder"></div>
+                            <div class="product-info">
+                                <p class="product-name">商品名稱</p>
+                                <p class="product-price">商品價格</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <button class="carousel-arrow right-arrow">
+                <span class="arrow-icon">〉</span>
+            </button>
+
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="app.js"></script>
+
+</body>
+</html>
