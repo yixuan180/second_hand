@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手交易平台 - 商品審核</title>
+    <!-- 根據您的資料夾結構調整路徑 -->
+    <link rel="stylesheet" href="styles.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .review-product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            display: flex;
+            gap: 15px;
+        }
+        .review-product-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        .review-product-info {
+            flex-grow: 1;
+        }
+        .review-product-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .review-product-detail {
+            font-size: 0.9em;
+            color: #666;
+            margin: 5px 0;
+        }
+        .review-product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-approve {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .btn-approve:hover {
+            background: #218838;
+        }
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .btn-reject:hover {
+            background: #c82333;
+        }
+        .reject-reason-input {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+        }
+        .reject-reason-input.show {
+            display: block;
+        }
+        .reject-reason-input textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9em;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+        .reject-reason-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-confirm-reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .btn-confirm-reject:hover {
+            background: #c82333;
+        }
+        .btn-cancel-reject {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .btn-cancel-reject:hover {
+            background: #5a6268;
+        }
+        .review-empty-message {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body class="product-body">
+    
+    <!-- 頂部導航欄 -->
+    <header class="main-header">
+        <a href="index.html" class="logo-link"><span class="sr-only">二手交易平台</span> </a>
+        <nav class="top-nav">
+            <!-- 審核清單導航 -->
+            <a id="upload-link" href="login.html" class="nav-link">商品上架</a>
+            <a id="chat-link" href="#" class="nav-link">聊天室</a>
+            
+            <!-- 使用者下拉選單 -->
+            <div id="user-menu-dropdown" class="nav-dropdown" style="display: none;">
+                <a id="user-name" href="#" class="nav-link nav-dropdown-toggle"></a>
+                <div class="nav-dropdown-content">
+                    <a href="#" class="nav-link-item">個人訂單紀錄</a>
+                    <a href="#" class="nav-link-item">上架紀錄</a>
+                    <a href="review.html" class="nav-link-item" id="review-link" style="display: none;">審核清單</a>
+                </div>
+            </div>
+            
+            <a id="login-link" href="login.html" class="nav-link">登入</a>
+            <a id="logout-btn-real" href="#" class="nav-link">登出</a>
+        </nav>
+    </header>
+
+    <main class="content-area review-area">
+        <h2 class="page-title">待審核商品列表</h2>
+        
+        <!-- 審核列表容器 -->
+        <div class="pending-products-list" id="pending-products-list">
+            <!-- 預設載入中訊息 -->
+            <p class="loading-message">正在載入待審核商品...</p>
+        </div>
+
+        <!-- 狀態訊息 -->
+        <p id="review-status-message" style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #555;"></p>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
